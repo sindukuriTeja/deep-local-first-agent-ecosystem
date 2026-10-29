@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Nushift — Law, tax and compliance, shifted into one intelligent workspace." />
+  <meta name="color-scheme" content="dark light" />
+  <title>Workspace | Nushift</title>
+
+  <!-- Favicon: 32px gradient circle (violet to cyan) -->
+  <link
+    rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%238B7BFF'/%3E%3Cstop offset='100%25' stop-color='%2322D3EE'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='14' fill='url(%23g)'/%3E%3C/svg%3E"
+  />
+
+  <!-- Fonts: Sora & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./src/styles.css" />
+
+  <!-- Theme bootstrap (prevents flash of wrong theme) -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('nushift_theme') || localStorage.getItem('lfae_theme');
+        if (t !== 'light' && t !== 'dark') {
+          t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <!-- Shared Workspace Shell (matches src/workspace.js) -->
+  <div class="workspace-layout">
+    <!-- Sidebar -->
+    <aside class="workspace-sidebar" id="workspace-sidebar" aria-label="Workspace navigation">
+      <div style="display:flex; flex-direction:column; gap:18px; min-width:0;">
+        <!-- Brand -->
+        <a href="index.html" style="display:flex; align-items:center; gap:10px; min-width:0;">
+          <span style="width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg, #8B7BFF 0%, #22D3EE 100%); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </span>
+          <span style="min-width:0;">
+            <span style="font-family:var(--font-heading); font-weight:700; font-size:15px; color:var(--fg); display:block; line-height:1.2;">Nushift</span>
+            <span style="font-size:11px; color:var(--mu); display:block; letter-spacing:0.02em;">Intelligent Workspace</span>
+          </span>
+        </a>
+
+        <!-- Navigation (rendered by workspace.js) -->
+        <ul class="sidebar-nav-list" id="sidebar-nav-list"></ul>
+      </div>
+
+      <!-- User block -->
+      <div class="sidebar-user-block">
+        <div class="sidebar-user-info">
+          <div class="user-avatar-circle" id="shell-avatar">U</div>
+          <div style="min-width:0; flex:1;">
+            <div id="shell-user-name" style="font-weight:600; font-size:13px; color:var(--fg); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">User</div>
+            <div id="shell-user-role" style="font-size:11px; color:var(--mu); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Workspace</div>
+          </div>
+        </div>
+        <button type="button" id="shell-signout-btn" class="btn btn-ghost btn-sm" style="width:100%; display:flex; align-items:center; gap:8px; justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Sign out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main column -->
+    <div class="workspace-main">
+      <!-- Topbar -->
+      <header class="workspace-topbar">
+        <div style="min-width:0;">
+          <div id="shell-role-eyebrow" class="caption" style="letter-spacing:0.08em;">WORKSPACE</div>
+          <h1 id="shell-greeting" style="font-family:var(--font-heading); font-size:24px; font-weight:700; color:var(--fg); margin:4px 0 0;">Welcome</h1>
+          <nav class="breadcrumb-row" id="shell-breadcrumb" aria-label="Breadcrumb"></nav>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <button type="button" class="btn btn-ghost btn-circle" id="sidebar-menu-btn" aria-label="Open navigation" title="Open navigation" style="display:none;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+          </button>
+          <button type="button" class="btn btn-ghost btn-circle" id="shell-notif-btn" aria-label="Notifications" title="Notifications">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+          </button>
+          <button type="button" class="btn btn-ghost btn-circle" data-theme-toggle aria-label="Toggle theme" title="Toggle theme"></button>
+        </div>
+      </header>
+
+      <!-- Role-specific content (rendered by workspace.js) -->
+      <main id="workspace-content" role="main"></main>
+    </div>
+  </div>
+
+  <!-- Sign Out Confirmation Modal (workspace.js: openModal('signout-modal')) -->
+  <div id="signout-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="signout-title">
+    <div class="modal-card">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+        <div style="width:40px; height:40px; border-radius:10px; background:var(--status-error-bg); display:flex; align-items:center; justify-content:center; color:var(--status-error-fg);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </div>
+        <div>
+          <h3 id="signout-title" style="font-size:18px; font-weight:700; color:var(--fg);">Sign out of Nushift</h3>
+          <p style="font-size:12px; color:var(--mu); margin-top:2px;">End your active workspace session</p>
+        </div>
+      </div>
+      <p style="font-size:14px; color:var(--mu); line-height:1.5; margin-bottom:24px;">
+        Are you sure you want to sign out? You will be returned to the role workspace selection screen.
+      </p>
+      <div style="display:flex; gap:12px; justify-content:flex-end;">
+        <button type="button" id="cancel-signout-btn" class="btn btn-ghost" style="padding:8px 18px;">Cancel</button>
+        <button type="button" id="confirm-signout-btn" class="btn btn-primary" style="padding:8px 20px;">Sign out</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Bootstrap -->
+  <script type="module" src="./src/workspace.js"></script>
+</body>
+</html>
