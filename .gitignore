@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Node / frontend build
+node_modules/
+dist/
+
+# Runtime-generated state (regenerated on startup; never commit)
+data/
+
+# OS / editor
+.DS_Store
+*.swp
